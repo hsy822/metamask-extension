@@ -5,7 +5,7 @@ import mockState from '../../../../../test/data/mock-state.json';
 import { createMockInternalAccount } from '../../../../../test/jest/mocks';
 import { InternalAccountWithBalance } from '../../../../selectors';
 import { renderWithProvider } from '../../../../../test/jest/rendering';
-import { SRPListItem } from './srp-list-item';
+import { SrpListItem } from './srp-list-item';
 import { shortenAddress } from '../../../../helpers/utils/util';
 
 const mockTotalFiatBalance = '100';
@@ -33,12 +33,11 @@ jest.mock('../../../../helpers/utils/util', () => ({
 
 const render = () => {
   const store = configureMockStore([thunk])(mockState);
-  return renderWithProvider(<SRPListItem account={mockAccount} />, store);
+  return renderWithProvider(<SrpListItem account={mockAccount} />, store);
 };
 
-describe('SRPListItem', () => {
+describe('SrpListItem', () => {
   beforeEach(() => {
-    // Reset mock implementations before each test
     mocks.useMultichainAccountTotalFiatBalance.mockReturnValue({
       totalFiatBalance: mockTotalFiatBalance,
     });
@@ -52,7 +51,7 @@ describe('SRPListItem', () => {
     const { getByText } = render();
 
     expect(getByText(mockAccount.metadata.name)).toBeInTheDocument();
-    expect(getByText(mockAccount.address)).toBeInTheDocument();
+    expect(getByText(shortenAddress(mockAccount.address))).toBeInTheDocument();
   });
 
   it('calls useMultichainAccountTotalFiatBalance with correct account', () => {
