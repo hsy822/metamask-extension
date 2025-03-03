@@ -39,7 +39,7 @@ const createMockedHandler = (mks = {}) => {
   const next = jest.fn();
   const end = jest.fn();
   const mocks = {
-    hasApprovalRequestsForOrigin: false,
+    hasApprovalRequestsForOrigin: () => false,
     getNetworkConfigurationByChainId: jest
       .fn()
       .mockReturnValue(createMockMainnetConfiguration()),
@@ -185,7 +185,7 @@ describe('switchEthereumChainHandler', () => {
 
   it('get user approval if there are pending confirmations for the origin', async () => {
     const { mocks, handler } = createMockedHandler({
-      hasApprovalRequestsForOrigin: true,
+      hasApprovalRequestsForOrigin: () => true,
     });
 
     const request = {

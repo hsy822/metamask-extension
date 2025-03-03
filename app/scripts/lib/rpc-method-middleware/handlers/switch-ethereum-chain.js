@@ -72,7 +72,7 @@ async function switchEthereumChainHandler(
     );
   }
 
-  if (hasApprovalRequestsForOrigin) {
+  if (hasApprovalRequestsForOrigin()) {
     const fromNetworkConfiguration = getNetworkConfigurationByChainId(
       currentChainIdForOrigin,
     );
