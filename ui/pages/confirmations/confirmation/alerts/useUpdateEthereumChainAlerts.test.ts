@@ -6,7 +6,7 @@ import { getMockPersonalSignConfirmState } from '../../../../../test/data/confir
 import { renderHookWithProvider } from '../../../../../test/lib/render-helpers';
 import * as AlertActions from '../../../../ducks/confirm-alerts/confirm-alerts';
 
-import { useAddEthereumChainAlerts } from './useAddEthereumChainAlerts';
+import { useAddEthereumChainAlerts } from './useUpdateEthereumChainAlerts';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

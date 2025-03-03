@@ -14,7 +14,7 @@ const VALIDATED_APPROVAL_TYPES = [
   ApprovalType.SwitchEthereumChain,
 ];
 
-export function useAddEthereumChainAlerts(
+export function useUpdateEthereumChainAlerts(
   pendingConfirmation: ApprovalRequest<{ id: string }>,
 ): Alert[] {
   const pendingConfirmations = useSelector(getMemoizedUnapprovedConfirmations);
