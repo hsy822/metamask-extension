@@ -74,6 +74,7 @@ import { ENVIRONMENT } from '../../../development/build/constants';
 ///: END:ONLY_INCLUDE_IF
 
 import { KeyringType } from '../../../shared/constants/keyring';
+import { convertHexChainIdToDecimal } from '../../../shared/modules/network.utils';
 import type {
   PreferencesControllerState,
   PreferencesControllerGetStateAction,
@@ -897,7 +898,7 @@ export default class MetaMetricsController extends BaseController<
         properties: {
           params,
           locale: this.locale,
-          chain_id: this.chainId,
+          chain_id: convertHexChainIdToDecimal(this.chainId),
           environment_type: environmentType,
         },
         context: this.#buildContext(referrer, page),
@@ -1155,7 +1156,7 @@ export default class MetaMetricsController extends BaseController<
           'chain_id' in properties &&
           typeof properties.chain_id === 'string'
             ? properties.chain_id
-            : this.chainId,
+            : convertHexChainIdToDecimal(this.chainId),
         environment_type: environmentType,
         ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
         ...mmiProps,
