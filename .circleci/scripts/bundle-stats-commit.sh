@@ -13,7 +13,7 @@ fi
 if [[ "${GITHUB_REF_NAME}" != "main" ]]
 then
     printf 'This is not the main branch'
-    exit 0
+    # exit 0
 fi
 
 if [[ -z "${METAMASKBOT_TOKEN:-}" ]]
