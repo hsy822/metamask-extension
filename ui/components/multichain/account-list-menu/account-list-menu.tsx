@@ -562,7 +562,7 @@ export const AccountListMenu = ({
                     }}
                     data-testid="multichain-account-menu-popover-add-btc-account"
                   >
-                    {t('addNewBitcoinAccount')}
+                    {t('addBitcoinAccountLabel')}
                   </ButtonLink>
                 </Box>
               )
@@ -584,7 +584,7 @@ export const AccountListMenu = ({
                     }}
                     data-testid="multichain-account-menu-popover-add-btc-account-testnet"
                   >
-                    {t('addNewBitcoinTestnetAccount')}
+                    {t('addBitcoinTestnetAccountLabel')}
                   </ButtonLink>
                 </Box>
               ) : null
@@ -669,7 +669,7 @@ export const AccountListMenu = ({
                   }
                 }}
               >
-                {t('addHardwareWallet')}
+                {t('addHardwareWalletLabel')}
               </ButtonLink>
             </Box>
             {
