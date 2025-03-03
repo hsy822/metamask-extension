@@ -1,4 +1,6 @@
+import { ApprovalType } from '@metamask/controller-utils';
 import { providerErrors } from '@metamask/rpc-errors';
+
 import { MESSAGE_TYPE } from '../../../../../shared/constants/app';
 import {
   validateSwitchEthereumChainParams,
@@ -11,11 +13,13 @@ const switchEthereumChain = {
   hookNames: {
     getNetworkConfigurationByChainId: true,
     setActiveNetwork: true,
+    requestUserApproval: true,
     getCaveat: true,
     getCurrentChainIdForDomain: true,
     requestPermittedChainsPermissionForOrigin: true,
     requestPermittedChainsPermissionIncrementalForOrigin: true,
     setTokenNetworkFilter: true,
+    hasApprovalRequestsForOrigin: true,
   },
 };
 
@@ -29,11 +33,13 @@ async function switchEthereumChainHandler(
   {
     getNetworkConfigurationByChainId,
     setActiveNetwork,
+    requestUserApproval,
     getCaveat,
     getCurrentChainIdForDomain,
     requestPermittedChainsPermissionForOrigin,
     requestPermittedChainsPermissionIncrementalForOrigin,
     setTokenNetworkFilter,
+    hasApprovalRequestsForOrigin,
   },
 ) {
   let chainId;
@@ -64,6 +70,23 @@ async function switchEthereumChainHandler(
         message: `Unrecognized chain ID "${chainId}". Try adding the chain using ${MESSAGE_TYPE.ADD_ETHEREUM_CHAIN} first.`,
       }),
     );
+  }
+
+  if (hasApprovalRequestsForOrigin) {
+    const fromNetworkConfiguration = getNetworkConfigurationByChainId(
+      currentChainIdForOrigin,
+    );
+
+    const toNetworkConfiguration = getNetworkConfigurationByChainId(chainId);
+
+    await requestUserApproval({
+      origin,
+      type: ApprovalType.SwitchEthereumChain,
+      requestData: {
+        toNetworkConfiguration,
+        fromNetworkConfiguration,
+      },
+    });
   }
 
   return switchChain(res, end, chainId, networkClientIdToSwitchTo, {

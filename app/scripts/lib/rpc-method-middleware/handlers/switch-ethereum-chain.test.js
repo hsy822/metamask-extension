@@ -35,10 +35,11 @@ const createMockLineaMainnetConfiguration = () => ({
   ],
 });
 
-const createMockedHandler = () => {
+const createMockedHandler = (mks = {}) => {
   const next = jest.fn();
   const end = jest.fn();
   const mocks = {
+    hasApprovalRequestsForOrigin: false,
     getNetworkConfigurationByChainId: jest
       .fn()
       .mockReturnValue(createMockMainnetConfiguration()),
@@ -48,10 +49,14 @@ const createMockedHandler = () => {
     requestPermittedChainsPermissionForOrigin: jest.fn(),
     requestPermittedChainsPermissionIncrementalForOrigin: jest.fn(),
     setTokenNetworkFilter: jest.fn(),
+    requestUserApproval: jest.fn(),
   };
   const response = {};
   const handler = (request) =>
-    switchEthereumChain.implementation(request, response, next, end, mocks);
+    switchEthereumChain.implementation(request, response, next, end, {
+      ...mocks,
+      ...mks,
+    });
 
   return {
     mocks,
@@ -176,5 +181,24 @@ describe('switchEthereumChainHandler', () => {
         setTokenNetworkFilter: mocks.setTokenNetworkFilter,
       },
     );
+  });
+
+  it('get user approval if there are pending confirmations for the origin', async () => {
+    const { mocks, handler } = createMockedHandler({
+      hasApprovalRequestsForOrigin: true,
+    });
+
+    const request = {
+      origin: 'example.com',
+      params: [
+        {
+          foo: true,
+        },
+      ],
+    };
+
+    await handler(request);
+
+    expect(mocks.requestUserApproval).toHaveBeenCalledTimes(1);
   });
 });

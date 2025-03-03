@@ -50,9 +50,12 @@ export function useAddEthereumChainAlerts(
           },
         ],
         key: 'pendingConfirmationFromSameOrigin',
-        message: t('pendingConfirmationAddNetworkAlertMessage', [
-          pendingConfirmationsFromSameOrigin.length,
-        ]),
+        message: t(
+          pendingConfirmation.type === ApprovalType.AddEthereumChain
+            ? 'pendingConfirmationAddNetworkAlertMessage'
+            : 'pendingConfirmationSwitchNetworkAlertMessage',
+          [pendingConfirmationsFromSameOrigin.length],
+        ),
         reason: t('areYouSure'),
         severity: Severity.Warning,
       },
