@@ -6,7 +6,7 @@ import { getMockPersonalSignConfirmState } from '../../../../../test/data/confir
 import { renderHookWithProvider } from '../../../../../test/lib/render-helpers';
 import * as AlertActions from '../../../../ducks/confirm-alerts/confirm-alerts';
 
-import { useAddEthereumChainAlerts } from './useUpdateEthereumChainAlerts';
+import { useUpdateEthereumChainAlerts } from './useUpdateEthereumChainAlerts';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -42,10 +42,10 @@ const SWITCH_ETH_CHAIN_ALERT = [
   },
 ] as AlertActions.Alert[];
 
-describe('useAddEthereumChainAlerts', () => {
+describe('useUpdateEthereumChainAlerts', () => {
   it('returns alert for approval type addEthereumChain if there are pending confirmations', () => {
     const { result } = renderHookWithProvider(
-      () => useAddEthereumChainAlerts(PENDING_APPROVAL_MOCK),
+      () => useUpdateEthereumChainAlerts(PENDING_APPROVAL_MOCK),
       getMockPersonalSignConfirmState(),
     );
     expect(result.current).toStrictEqual(ADD_ETH_CHAIN_ALERT);
@@ -54,7 +54,7 @@ describe('useAddEthereumChainAlerts', () => {
   it('returns alert for approval type switchEthereumChain if there are pending confirmations', () => {
     const { result } = renderHookWithProvider(
       () =>
-        useAddEthereumChainAlerts({
+        useUpdateEthereumChainAlerts({
           ...PENDING_APPROVAL_MOCK,
           type: ApprovalType.SwitchEthereumChain,
         }),
@@ -65,7 +65,7 @@ describe('useAddEthereumChainAlerts', () => {
 
   it('does not returns alert if there are no pending confirmations', () => {
     const { result } = renderHookWithProvider(
-      () => useAddEthereumChainAlerts(PENDING_APPROVAL_MOCK),
+      () => useUpdateEthereumChainAlerts(PENDING_APPROVAL_MOCK),
       mockState,
     );
     expect(result.current).toStrictEqual([]);
@@ -74,7 +74,7 @@ describe('useAddEthereumChainAlerts', () => {
   it('does not returns alert for un-supported pending confirmation type', () => {
     const { result } = renderHookWithProvider(
       () =>
-        useAddEthereumChainAlerts({
+        useUpdateEthereumChainAlerts({
           ...PENDING_APPROVAL_MOCK,
           type: ApprovalType.PersonalSign,
         }),
