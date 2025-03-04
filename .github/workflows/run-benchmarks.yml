@@ -88,7 +88,7 @@ jobs:
       - name: Record bundle size at commit
         run: ./.circleci/scripts/bundle-stats-commit.sh
         env:
-          METAMASKBOT_TOKEN: ${{ secrets.PR_COMMENT_TOKEN }}
+          METAMASKBOT_TOKEN: ${{ secrets.METAMASKBOT_TOKEN_NEW }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

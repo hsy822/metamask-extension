@@ -12,7 +12,7 @@ fi
 
 if [[ "${GITHUB_REF_NAME}" != "main" ]]
 then
-    printf 'This is not the main branch'
+    printf 'This is not the main branch\n'
     # exit 0
 fi
 
